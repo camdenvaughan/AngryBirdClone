@@ -9,7 +9,7 @@ public class CrateRandomizer : MonoBehaviour
     SpriteRenderer _spriteRenderer;
 
     // Cache Sprite Renderer Component
-    private void Awake()
+    void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -27,6 +27,5 @@ public class CrateRandomizer : MonoBehaviour
         // Randomly flip the x or y
         if (flipRandomizer > 1) _spriteRenderer.flipX = true;
         if (flipRandomizer < 1) _spriteRenderer.flipY = true;
-
     }
 }
