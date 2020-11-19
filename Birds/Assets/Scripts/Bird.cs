@@ -10,12 +10,12 @@ public class Bird : MonoBehaviour
 
     Vector2 _startPosition;
     Rigidbody2D _rigidbody2D;
-    SpriteRenderer _spriteRenderer;
+    Animator _animator;
 
     void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class Bird : MonoBehaviour
 
     void OnMouseDown()
     {
-        _spriteRenderer.color = Color.red;
+        _animator.SetBool("_isGrabbed", true);
     }
 
     void OnMouseUp()
@@ -40,7 +40,7 @@ public class Bird : MonoBehaviour
         _rigidbody2D.AddForce(direction * _launchForce);
 
 
-        _spriteRenderer.color = Color.white;
+        _animator.SetBool("_isGrabbed", false);
     }
 
     void OnMouseDrag()
