@@ -38,4 +38,8 @@ public class LevelController : MonoBehaviour
 
         return true;
     }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
