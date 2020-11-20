@@ -34,4 +34,8 @@ public class MenuController : MonoBehaviour
     {
         SceneManager.LoadScene(this.name);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
