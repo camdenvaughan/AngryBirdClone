@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class MenuBird : MonoBehaviour
 {
-
+    // Adjustable Variables to effect bird launch
     [SerializeField] float _launchForce = 1000f;
     [SerializeField] float _maxDragDistance = 3f;
     [SerializeField] float _maxYHeight = 0.9f;
     [SerializeField] float _minYHeight = -1.5f;
     [SerializeField] float _dragSpeed = 10f;
 
+
     Rigidbody2D _rigidbody2D;
     Animator _animator;
 
+    
     Vector2 _startPosition;
     Vector2 _randomDragPosition;
     Vector2 _direction;
-
     bool _canDrag;
 
     void Awake()
@@ -33,27 +34,27 @@ public class MenuBird : MonoBehaviour
         _startPosition = _rigidbody2D.position;
         _rigidbody2D.isKinematic = true;
 
-        StartCoroutine(StartMenuDrag());
+        StartCoroutine(StartMenuBirdLaunch());
     }
 
     // Starting Co-routine to handle bird launching
-    IEnumerator StartMenuDrag()
+    IEnumerator StartMenuBirdLaunch()
     {
         yield return new WaitForSeconds(1);
         _animator.SetBool("_isGrabbed", true);
 
-        AIDrag();
+        CreateRandomPosition();
         StartCoroutine(MoveToLaunchPostition());
 
         yield return new WaitForSeconds(2);
-        LetGo();
+        LaunchMenuBird();
 
         yield return new WaitForSeconds(1);
         StartCoroutine(ResetAfterDelay());
     }
 
     // Creates a random position for the bird to eventually move towards.
-    void AIDrag()
+    void CreateRandomPosition()
     {
         _randomDragPosition = new Vector2(-8f, Random.Range(_minYHeight, _maxYHeight));
 
@@ -90,7 +91,7 @@ public class MenuBird : MonoBehaviour
     }
 
     // Launches Bird by finding the direction, then adding a force
-    void LetGo()
+    void LaunchMenuBird()
     {
         Vector2 currentPosition = _rigidbody2D.position;
         Vector2 direction = _startPosition - currentPosition;
@@ -102,12 +103,13 @@ public class MenuBird : MonoBehaviour
         _animator.SetBool("_isGrabbed", false);
     }
 
+    // Resets the bird and restarts the StartMenuBirdLaunch Co-Routine
     IEnumerator ResetAfterDelay()
     {
         yield return new WaitForSeconds(3);
         _rigidbody2D.position = _startPosition;
         _rigidbody2D.isKinematic = true;
         _rigidbody2D.velocity = Vector2.zero;
-        StartCoroutine(StartMenuDrag());
+        StartCoroutine(StartMenuBirdLaunch());
     }
 }
